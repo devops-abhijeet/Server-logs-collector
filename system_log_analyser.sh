@@ -37,8 +37,11 @@ do
 		for key in "${keyword[@]}"
 		do
 			echo "Scanning for $key"
+			grep -i "$key" "$file" | tail -n 10
 			grep -i "$key" "$file" | tail -n 10 >> "$log_store"
 		done
+	else
+		echo "File not found"
 	fi
 done	
 
@@ -71,5 +74,7 @@ else
 fi
 
 #Inserting Data into table 
-mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" "$DB_DB" -e "INSERT INTO $DB_TABLE (ip_address, hostname, log_data) VALUES ('$ip_add', '$host', '$data');"
+mysql -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASSWORD" "$DB_DB" -e "INSERT INTO $DB_TABLE (ip_address, hostname, log_data) VALUES ('$ip_add', '$host', '$data');" 2>> /tmp/mysql_error.log
 
+#Making Empty 
+echo > /tmp/logs.log
