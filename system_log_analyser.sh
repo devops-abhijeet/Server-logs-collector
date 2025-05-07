@@ -3,12 +3,12 @@
 # Author : Abhijeet K
 # Reason : Daily Log monitoring and keeping records
 
-# Defining database credentilas 
-DB_HOST="10.251.251.5" 
-DB_DB="servers"
-DB_TABLE="server_logs"
-DB_USER="root"
-DB_PASSWORD="abhi1407"
+# Defining database credentilas from file credentials.ini file 
+DB_HOST=$(awk -F= '/DB_HOST=/ {print $2}' credentials.ini) 
+DB_DB=$(awk -F= '/DB_DB=/ {print $2}' credentials.ini)
+DB_TABLE=$(awk -F= '/DB_TABLE=/ {print $2}' credentials.ini)
+DB_USER=$(awk -F= '/DB_USER=/ {print $2}' credentials.ini)
+DB_PASSWORD=$(awk -F= '/DB_PASSWORD=/ {print $2}' credentials.ini)
 
 #Extracting IP & Hostname of server and storing into varibles
 ip_add=$(hostname -I | awk '{print $1}')
